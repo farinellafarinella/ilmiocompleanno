@@ -210,13 +210,6 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
-.admin-corner {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 20;
-}
-
 .game-corner {
   position: fixed;
   right: 18px;
@@ -252,6 +245,10 @@ textarea {
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
   margin-top: 0;
+}
+
+.inline-admin {
+  justify-content: flex-end;
 }
 
 .admin-mini input {
@@ -571,12 +568,6 @@ button:disabled {
     bottom: calc(86px + env(safe-area-inset-bottom));
     right: 10px;
     left: 10px;
-  }
-
-  .admin-corner {
-    right: 10px;
-    left: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom));
   }
 
   .game-mini,
