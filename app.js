@@ -19,6 +19,7 @@ const BANK_LOAN_AMOUNT = 10;
 const GAME_DURATION_MS = 3 * 60 * 60 * 1000;
 const ADMIN_PASSWORD = "admin123";
 const DESTINY_CARD_INTERVAL = 5;
+const GAME_OWNER_EMAIL = "mrpinkukulele@gmail.com";
 
 const registerView = document.querySelector("#register-view");
 const dashboardView = document.querySelector("#dashboard-view");
@@ -50,6 +51,7 @@ let rulesOpen = false;
 let rankingOpen = false;
 let remoteUnsubscribe = null;
 let authUnsubscribe = null;
+let timerVisible = false;
 
 if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
   window.addEventListener("load", () => {
@@ -341,6 +343,10 @@ function currentUser() {
   return getUser(sessionUserId);
 }
 
+function canStartGame(user) {
+  return Boolean(user?.email) && user.email.toLowerCase() === GAME_OWNER_EMAIL;
+}
+
 function buildNewUserProfile({ id, name, email }) {
   return {
     id,
@@ -455,6 +461,11 @@ function closeRules() {
 
 function toggleRanking() {
   rankingOpen = !rankingOpen;
+  render();
+}
+
+function toggleTimerVisibility() {
+  timerVisible = !timerVisible;
   render();
 }
 
@@ -1375,6 +1386,9 @@ function renderDashboard() {
       </div>
       <div class="actions">
         <button class="secondary" data-action="open-rules">Regole</button>
+        <button class="secondary" data-action="toggle-timer">
+          ${timerVisible ? "Nascondi timer" : "Mostra timer"}
+        </button>
         <button class="secondary" data-action="logout">Cambia giocatore</button>
       </div>
     </section>
@@ -1584,21 +1598,15 @@ function renderDashboard() {
           <h3>Altri giocatori</h3>
         </div>
         ${
-          adminUnlocked
+          canStartGame(user) && !isGameActive() && !isGameFinished()
             ? `
               <div class="admin-mini inline-admin">
-                <button class="primary" data-action="start-game" ${isGameActive() || isGameFinished() ? "disabled" : ""}>
+                <button class="primary" data-action="start-game">
                   Inizia partita
                 </button>
-                <button class="ghost" data-action="lock-admin">Esci admin</button>
               </div>
             `
-            : `
-              <form class="admin-mini inline-admin" data-action="unlock-admin">
-                <input name="adminPassword" type="password" placeholder="Password admin" required />
-                <button class="primary" type="submit">Inizia partita</button>
-              </form>
-            `
+            : ""
         }
       </div>
       ${
@@ -1830,13 +1838,19 @@ function renderDashboard() {
         : ""
     }
 
-    <section class="game-corner">
-      <div class="game-mini">
-        <span class="badge">${isGameFinished() ? "Classifica" : "Partita"}</span>
-        <strong>${isGameActive() ? "In corso" : isGameFinished() ? "Finito" : "Da iniziare"}</strong>
-        <span class="tiny" data-role="game-timer">Timer ${isGameFinished() ? "00:00:00" : formatRemainingTime()}</span>
-      </div>
-    </section>
+    ${
+      timerVisible
+        ? `
+          <section class="game-corner">
+            <div class="game-mini">
+              <span class="badge">${isGameFinished() ? "Classifica" : "Partita"}</span>
+              <strong>${isGameActive() ? "In corso" : isGameFinished() ? "Finito" : "Da iniziare"}</strong>
+              <span class="tiny" data-role="game-timer">Timer ${isGameFinished() ? "00:00:00" : formatRemainingTime()}</span>
+            </div>
+          </section>
+        `
+        : ""
+    }
   `;
 
   dashboardView.querySelector('[data-action="logout"]').addEventListener("click", () => {
@@ -1847,32 +1861,19 @@ function renderDashboard() {
     openRules();
   });
 
+  dashboardView.querySelector('[data-action="toggle-timer"]').addEventListener("click", () => {
+    toggleTimerVisibility();
+  });
+
   dashboardView.querySelector('[data-action="toggle-ranking"]').addEventListener("click", () => {
     toggleRanking();
   });
 
-  if (dashboardView.querySelector('[data-action="unlock-admin"]')) {
-    dashboardView
-      .querySelector('[data-action="unlock-admin"]')
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        clearMessage();
-        unlockAdmin(new FormData(event.currentTarget));
-      });
-  }
-
-  if (dashboardView.querySelector('[data-action="lock-admin"]')) {
-    dashboardView.querySelector('[data-action="lock-admin"]').addEventListener("click", () => {
-      clearMessage();
-      lockAdmin();
-    });
-  }
-
   if (dashboardView.querySelector('[data-action="start-game"]')) {
     dashboardView.querySelector('[data-action="start-game"]').addEventListener("click", () => {
       clearMessage();
-      if (!adminUnlocked) {
-        setMessage("error", "Accesso admin richiesto.");
+      if (!canStartGame(currentUser())) {
+        setMessage("error", "Solo l'account autorizzato puo iniziare la partita.");
         render();
         return;
       }
