@@ -1,0 +1,620 @@
+:root {
+  --bg: #050505;
+  --panel: rgba(18, 18, 18, 0.88);
+  --panel-strong: #101010;
+  --text: #f7f0b6;
+  --muted: #c2b86e;
+  --accent: #ffd000;
+  --accent-dark: #111111;
+  --accent-soft: rgba(255, 208, 0, 0.16);
+  --success: #ffd000;
+  --danger: #ff8c00;
+  --line: rgba(255, 255, 255, 0.08);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 208, 0, 0.14), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(255, 208, 0, 0.08), transparent 20%),
+    linear-gradient(180deg, #050505 0%, #0d0d0d 100%);
+  padding-bottom: 120px;
+}
+
+.app-shell {
+  width: min(1200px, calc(100% - 32px));
+  margin: 24px auto;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+}
+
+.hero-panel,
+.card,
+.dashboard-section,
+.player-card,
+.challenge-card,
+.stat-card {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel {
+  padding: 32px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 208, 0, 0.96), rgba(214, 169, 0, 0.96)),
+    var(--accent);
+  color: #111111;
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  opacity: 0.84;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(3rem, 6vw, 5.4rem);
+  line-height: 0.92;
+}
+
+.hero-copy {
+  color: rgba(17, 17, 17, 0.8);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 20px 0 28px;
+}
+
+.hero-card {
+  background: rgba(17, 17, 17, 0.1);
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.hero-card span {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.78;
+  margin-bottom: 8px;
+}
+
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.card,
+.dashboard-section {
+  border-radius: 28px;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+}
+
+.card {
+  padding: 32px;
+}
+
+.dashboard {
+  display: grid;
+  gap: 20px;
+}
+
+.dashboard-section {
+  padding: 24px;
+}
+
+.section-head,
+.dashboard-header,
+.challenge-head,
+.player-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dashboard-header {
+  padding: 28px;
+  background: var(--panel-strong);
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.welcome h2 {
+  font-size: 2.2rem;
+  color: #ffffff;
+}
+
+.welcome p,
+.muted,
+label,
+input,
+button,
+textarea {
+  font-family: "Manrope", sans-serif;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.dashboard-header .muted {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.stats-grid,
+.players-grid,
+.challenge-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.players-grid,
+.challenge-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stat-card,
+.player-card,
+.challenge-card {
+  background: var(--panel-strong);
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.player-card form {
+  margin-top: 16px;
+}
+
+.player-actions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.admin-corner {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 20;
+}
+
+.game-corner {
+  position: fixed;
+  right: 18px;
+  top: 18px;
+  z-index: 20;
+}
+
+.game-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 170px;
+  padding: 12px 14px;
+  background: rgba(16, 16, 16, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.game-mini strong {
+  font-size: 1.1rem;
+}
+
+.admin-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(16, 16, 16, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  margin-top: 0;
+}
+
+.admin-mini input {
+  width: 150px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+}
+
+.admin-mini button {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.card-banner-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.74);
+  z-index: 40;
+}
+
+.card-banner {
+  width: min(460px, 100%);
+  padding: 28px;
+  border-radius: 24px;
+  background: #101010;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 14px;
+  text-align: center;
+}
+
+.card-banner h3 {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.card-banner .muted {
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+}
+
+.rules-banner {
+  text-align: left;
+  max-height: min(80vh, 760px);
+  overflow: auto;
+}
+
+.rules-list {
+  display: grid;
+  gap: 10px;
+}
+
+.rules-list p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.5;
+}
+
+.stat-card span,
+.badge,
+.tiny {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 2rem;
+}
+
+.badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111111;
+}
+
+.badge.success {
+  background: rgba(255, 208, 0, 0.14);
+  color: var(--success);
+}
+
+.badge.danger {
+  background: rgba(255, 140, 0, 0.14);
+  color: var(--danger);
+}
+
+form {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+label {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #171717;
+  color: var(--text);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 1rem;
+}
+
+button {
+  border: 0;
+  border-radius: 16px;
+  padding: 13px 18px;
+  font-size: 0.98rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.16s ease, opacity 0.16s ease, background 0.16s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #111111;
+}
+
+button.secondary {
+  background: #ffffff;
+  color: #111111;
+}
+
+button.success {
+  background: var(--success);
+  color: #111111;
+}
+
+button.danger {
+  background: var(--danger);
+  color: #111111;
+}
+
+button.ghost {
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid var(--line);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.actions,
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stack {
+  flex-direction: column;
+}
+
+.player-card p,
+.challenge-card p {
+  margin: 10px 0;
+}
+
+.empty {
+  margin: 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: #c9c9c9;
+  border: 1px dashed var(--line);
+  color: #111111;
+}
+
+.message {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+}
+
+.message.info {
+  background: rgba(216, 91, 52, 0.1);
+  color: var(--accent-dark);
+}
+
+.message.success {
+  background: rgba(29, 122, 82, 0.12);
+  color: var(--success);
+}
+
+.message.error {
+  background: rgba(168, 61, 41, 0.12);
+  color: var(--danger);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-panel {
+    position: static;
+  }
+
+  .stats-grid,
+  .auth-grid,
+  .players-grid,
+  .challenge-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 190px;
+  }
+
+  .app-shell {
+    width: min(100%, calc(100% - 20px));
+    margin: 10px auto;
+    gap: 14px;
+  }
+
+  .hero-panel,
+  .card,
+  .dashboard-header,
+  .dashboard-section,
+  .player-card,
+  .challenge-card,
+  .stat-card,
+  .game-mini,
+  .admin-mini,
+  .card-banner {
+    border-radius: 20px;
+  }
+
+  .hero-panel {
+    padding: 22px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 15vw, 3.5rem);
+  }
+
+  .card,
+  .dashboard-header,
+  .dashboard-section {
+    padding: 18px;
+  }
+
+  .section-head,
+  .dashboard-header,
+  .challenge-head,
+  .player-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions button,
+  .player-actions button,
+  form button {
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-card strong {
+    font-size: 1.5rem;
+  }
+
+  .player-card,
+  .challenge-card {
+    padding: 16px;
+  }
+
+  form {
+    margin-top: 16px;
+  }
+
+  input,
+  button {
+    min-height: 48px;
+  }
+
+  .game-corner {
+    top: auto;
+    bottom: calc(86px + env(safe-area-inset-bottom));
+    right: 10px;
+    left: 10px;
+  }
+
+  .admin-corner {
+    right: 10px;
+    left: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .game-mini,
+  .admin-mini {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .admin-mini {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-mini input {
+    width: 100%;
+  }
+
+  .card-banner-backdrop {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .card-banner {
+    width: 100%;
+    max-height: 88vh;
+    padding: 22px 18px;
+  }
+
+  .card-banner h3 {
+    font-size: 1.6rem;
+  }
+
+  .rules-banner {
+    max-height: 82vh;
+  }
+
+  .badge,
+  .tiny {
+    font-size: 0.68rem;
+  }
+}
