@@ -1583,6 +1583,23 @@ function renderDashboard() {
           <span class="badge">Lobby</span>
           <h3>Altri giocatori</h3>
         </div>
+        ${
+          adminUnlocked
+            ? `
+              <div class="admin-mini inline-admin">
+                <button class="primary" data-action="start-game" ${isGameActive() || isGameFinished() ? "disabled" : ""}>
+                  Inizia partita
+                </button>
+                <button class="ghost" data-action="lock-admin">Esci admin</button>
+              </div>
+            `
+            : `
+              <form class="admin-mini inline-admin" data-action="unlock-admin">
+                <input name="adminPassword" type="password" placeholder="Password admin" required />
+                <button class="primary" type="submit">Inizia partita</button>
+              </form>
+            `
+        }
       </div>
       ${
         others.length
@@ -1819,26 +1836,6 @@ function renderDashboard() {
         <strong>${isGameActive() ? "In corso" : isGameFinished() ? "Finito" : "Da iniziare"}</strong>
         <span class="tiny" data-role="game-timer">Timer ${isGameFinished() ? "00:00:00" : formatRemainingTime()}</span>
       </div>
-    </section>
-
-    <section class="admin-corner">
-      ${
-        adminUnlocked
-          ? `
-            <div class="admin-mini">
-              <button class="primary" data-action="start-game" ${isGameActive() || isGameFinished() ? "disabled" : ""}>
-                Inizia partita
-              </button>
-              <button class="ghost" data-action="lock-admin">Esci admin</button>
-            </div>
-          `
-          : `
-            <form class="admin-mini" data-action="unlock-admin">
-              <input name="adminPassword" type="password" placeholder="Password admin" required />
-              <button class="primary" type="submit">Inizia partita</button>
-            </form>
-          `
-      }
     </section>
   `;
 
